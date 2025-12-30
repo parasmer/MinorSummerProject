@@ -1,5 +1,5 @@
 import React from "react";
-const DashboardPage=({setisLoggedIn})=>{
+const DashboardPage=()=>{
 return(
     <div>
         
