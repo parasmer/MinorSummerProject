@@ -3,7 +3,7 @@ import {Navigate} from "react-router-dom"
 const PrivateRoute=({isLoggedIn,children})=>{
    if(isLoggedIn){
     //react will return the component outside which privateroute is applied
-    return children
+    return children;
    }
    else{
     return<Navigate to="/login"/>
