@@ -1,14 +1,14 @@
-import { apiError } from "../utils/apiError"
-import apiResponse from "../utils/apiResonse";
-import User from "../models/user.model.jsx"
-import asyncHandler from "../utils/asyncHandler.jsx";
+import { apiError } from "../utils/apiError.js"
+import apiResponse from "../utils/apiResponse.js";
+import User from "../models/user.model.js"
+import asyncHandler from "../utils/asyncHandler.js";
 import jwt from "jsonwebtoken"
 
 const generateAccessandRefreshToken=async(userId)=>{
     try{
 const user=await User.findById(userId)
 const accessToken=user.generateAccessToken()
-const refreshToken=user.generateRefeshToken()
+const refreshToken=user.generateRefreshToken()
 //it will save the refreshtoken in user object
 user.refreshToken=refreshToken
 //it is used to reduce latency that occurrs in validation check
@@ -21,7 +21,22 @@ console.log("refreshToken and accesstoken not created ",error)
 throw new apiError(500,"Something went wrong while generating refresh token and access token")
     }
 }
+const getCurrentUser = asyncHandler(async(req, res) => {
+    // Because verifyJWT ran first, req.user is available here
+    const user = req.user;
+
+    return res
+        .status(200)
+        .json(
+            new apiResponse(
+                200, 
+                user, 
+                "Current user fetched successfully"
+            )
+        );
+    });
 const signUpUser=asyncHandler(async(req,res)=>{
+    console.log("I AM HERE! Request received:", req.body); // <--- ADD THIS LINE
     const {fullName,email,password,confirmPassword,accountType}=req.body
     // if any field is empty 
     if([fullName,email,password,confirmPassword,accountType].some((field)=>
@@ -35,7 +50,8 @@ const signUpUser=asyncHandler(async(req,res)=>{
     }
     // checking exisisting user.  with help of {accounttype and email}
     const exisistedUser=await User.findOne({
-$and:[{email},{accountType}]
+email: email, 
+    accountType: accountType
     })
     if(exisistedUser){
         throw new apiError(409,"User already exisisted")
@@ -53,15 +69,15 @@ accountType
 // -password and -refreshtoken means dont give me these fiels of user
 
 // after this we will check that user is created successfully (with the help of user_.id) to send response back to frontend
-const findUser=await user.findById(user_.id).select(
-    "-password -refreshToken"
+const findUser=await User.findById(user._id).select(
+    "-password -fullName -refreshToken"
 )
 // if user was not created successfully 
 if(!findUser){
     throw new apiError(500,"something went wrong")
 }
 return res.status(201).json(
-    new apiResponse(200,createdUser,"user registered successfully")
+    new apiResponse(200,findUser,"user registered successfully")
 )
 })
 // it is done
@@ -91,12 +107,12 @@ const options={
 }
 
 //fetching accesstoken and new refreshtoken from function
-const {accessToken,newRefreshToken}=generateAccessandRefreshToken(user._id)
+const {accessToken,refreshToken:newRefreshToken}=await generateAccessandRefreshToken(user._id)
 //passing new refreshtoken inside old refreshtoken in cookie and json response
 return res
 .status(200)
-.cookie("accessToken",accessToken)
-.cookie("refreshToken",newRefreshToken)
+.cookie("accessToken",accessToken,options)
+.cookie("refreshToken",newRefreshToken,options)
 .json(
     new apiResponse(
         200,
@@ -106,7 +122,7 @@ return res
 )
 }
 catch(err){
-throw new apiError(401,error?.message||"invalid refresh token")
+throw new apiError(401,err?.message||"invalid refresh token")
 }
 })
-export{signUpUser,generateAccessandRefreshToken,refreshAccessToken}
+export{signUpUser,generateAccessandRefreshToken,refreshAccessToken,getCurrentUser}

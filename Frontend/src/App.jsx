@@ -35,7 +35,7 @@ const checkToken=async()=>{
   // else token is present
   try{
     //making call to backend
-    const response=await axios.get("http://localhost:4000/api/v1/auth/verify",{headers:
+    const response=await axios.get("http://localhost:8000/api/v1/users/current-user",{headers:
       {
         'Authorization':`Bearer ${token}`,
       }

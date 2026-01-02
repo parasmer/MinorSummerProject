@@ -1,45 +1,59 @@
 import React, { useState } from "react";
+import {useNavigate} from "react-router-dom";
 import "./Common.css"
 
 const Signup= () => {
+  const navigate=useNavigate();
     const [fullName, setfullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
     const [confirmPassword, setconfirmPassword] = useState("");
   const [accountType,setAccountType]=useState("User")
-  // we will send req to backend to authenticate the registered user
-  const handleSubmit = async(e) =>{
 
+  // we will send req to backend to authenticate the registered user
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const formData = {
-      fullName,
+      fullName, 
       email,
-      password,
-      confirmPassword,
+      password, 
+      confirmPassword,// <--- ADDED: Many backends expect 'username', not 'fullName'
       accountType,
     };
-    try{
-const response=await fetch('http://localhost:5000/api/signup',{
-  method:'POST',
-  headers:{
-    'Content-Type':'application/json'
-  },
-body: JSON.stringify(formData),
-})
-if(response.ok){
-  alert("signup successfull");
-}
-else{
-  alert("error connecting to backend")
-}
+
+   try {
+    console.log("Sending data:", formData); 
+
+    const response = await fetch('http://localhost:8000/api/v1/users/signup', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        // FIX: Use JSON.stringify() to convert your object to a string
+        body: JSON.stringify(formData), 
+    });
+console.log("data sent successfully")
+// console.log("response",response);
+        // 2. We MUST parse the JSON to see what the backend said
+        const data = await response.json(); 
+        
+        console.log("Server Status Code:", response.status); // 3. Check status (200, 400, 500?)
+        console.log("Server Response Body:", data); // 4. Read the exact error message
+
+        if (response) {
+            alert("Signup Successful!");
+         navigate('/');
+            // Redirect or clear form here
+        } else {
+            // This will show you exactly why it failed
+            alert(`Signup Failed: ${data.message || JSON.stringify(data)}`);
+        }
+    } 
+    catch (err) {
+        console.log("Network/Code Error:", err);
+        alert("Connection Error. Check Backend Console.");
     }
-    catch(err){
-      console.log("network error:",err)
-    }
-     localStorage.setItem("accountType")
-    console.log("Form Submitted:", formData);
-    // Add your backend login logic here
-  };
+};
 
   return (
     <div className="both-container">
