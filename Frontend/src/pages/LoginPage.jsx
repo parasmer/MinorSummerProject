@@ -1,11 +1,10 @@
 import React from "react";
-import CommonTemplate from "../components/CommonTemplate";
+import Login from "../components/Login";
 const LoginPage=({setisLoggedIn,accountType,setAccoutType})=>{
 return(
     // both login and signup form uses same template without no change 
     <div>
-           <CommonTemplate
-           formtype="login"
+           <Login
            setisLoggedIn={setisLoggedIn}
            setAccoutType={setAccoutType}
            accountType={accountType}

@@ -2,6 +2,7 @@ import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
+import axios from 'axios'
 import {Routes,Route} from "react-router-dom"
 // components and pages
 //used private route for extra protection of dashboard ,usermap and engineermap
@@ -20,9 +21,7 @@ function App() {
   const [loading,setLoading]=useState(true);
     console.log("isLoggedIn:" ,isLoggedIn)
   //default accountType is user
-  const [accountType,setAccoutType]=useState(()=>{
-    return localStorage.getItem("accountType") || "user";
-  });
+
   // checking loggedin from backend by verifying token
   useEffect(()=>{
 const checkToken=async()=>{
@@ -76,8 +75,8 @@ checkToken();
      <Navbar isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
   <Routes>
       <Route path="/" element={<HomePage setIsLoggedIn={setIsLoggedIn}/>}/>
-       <Route path="/signup"  element={<SignUpPage setIsLoggedIn={setIsLoggedIn} accountType={accountType} setAccoutType={setAccoutType}/>}/>
-         <Route path="/login"  element={<LoginPage setIsLoggedIn={setIsLoggedIn} accountType={accountType} setAccoutType={setAccoutType}/>}/>
+       <Route path="/signup"  element={<SignUpPage setIsLoggedIn={setIsLoggedIn} />}/>
+         <Route path="/login"  element={<LoginPage setIsLoggedIn={setIsLoggedIn}/>}/>
           <Route path="/dashboard"  element={<PrivateRoute isLoggedIn={isLoggedIn} > <DashboardPage /> </PrivateRoute>}/>
             <Route path="/userMap" element={<PrivateRoute isLoggedIn={isLoggedIn} > <UserMapPage /> </PrivateRoute>}/>
               <Route path="/engineerMap" element={<PrivateRoute isLoggedIn={isLoggedIn} > <EngineerMapPage /> </PrivateRoute>}/> 

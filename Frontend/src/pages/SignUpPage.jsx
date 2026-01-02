@@ -1,10 +1,10 @@
 import React from "react";
-import CommonTemplate from "../components/CommonTemplate";
+// import CommonTemplate from "../components/CommonTemplate";
+import Signup from "../components/Signup"
 const SignUpPage=({setisLoggedIn,setAccoutType,accountType})=>{
 return(
     <div>
-        <CommonTemplate
-         formtype="signup"
+        <Signup
            setisLoggedIn={setisLoggedIn}
            setAccoutType={setAccoutType}
            accountType={accountType}/>
