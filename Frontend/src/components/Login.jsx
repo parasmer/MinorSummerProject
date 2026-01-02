@@ -1,22 +1,44 @@
 import React, { useState } from "react";
 import "./Common.css"
+import { useNavigate } from "react-router-dom";
 
-const Login = () => {
+const Login = ({setIsLoggedIn}) => {
+   const navigate=useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 const [accountType,setAccountType]=useState("User")
-  const handleSubmit = (e) => {
+  const handleSubmit =async (e) => {
     e.preventDefault();
     const formData = {
       email,
       password,
-      rememberMe,
       accountType,
     };
 
-    console.log("Form Submitted:", formData);
+    
    
-    // Add your backend login logic here
+try{
+ const response = await fetch('http://localhost:8000/api/v1/users/login', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formData), 
+    });
+const data=await response.json();
+if(response.ok){
+  console.log("logged in successfully");
+  setIsLoggedIn(true);
+
+ navigate('/dashboard')
+}
+else{
+  alert(`login failed : ${data.json}`)
+}
+}
+catch(error){
+  console.log("not getting response from backend",error)
+}
   };
 
   return (
@@ -59,7 +81,7 @@ const [accountType,setAccountType]=useState("User")
             />
             <label>Enter your password</label>
           </div>
-          <button type="submit">Log In</button>
+          <button className="login-button" type="submit">Log In</button>
         </form>
       </div>
     </div>

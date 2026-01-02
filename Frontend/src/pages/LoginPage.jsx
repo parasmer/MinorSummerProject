@@ -1,13 +1,11 @@
 import React from "react";
 import Login from "../components/Login";
-const LoginPage=({setisLoggedIn,accountType,setAccoutType})=>{
+const LoginPage=({setIsLoggedIn})=>{
 return(
     // both login and signup form uses same template without no change 
     <div>
            <Login
-           setisLoggedIn={setisLoggedIn}
-           setAccoutType={setAccoutType}
-           accountType={accountType}
+           setIsLoggedIn={setIsLoggedIn}
            />
     </div>
 )

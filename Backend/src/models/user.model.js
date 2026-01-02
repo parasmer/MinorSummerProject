@@ -24,28 +24,36 @@ const userSchema=new Schema(
     
     accountType:{
         type:String,
-       enum:["User","Engineer"]
+       enum:["User","Engineer"],
+       default:"User"
+    },
+    refreshToken:{
+        type:String,
     }
    
 
 },{timestamps:true})
 
 //for encrypting the password
-userSchema.pre("save",async function(next){
-    // if password wasnot changed
-    if(!this.isModified("password")){
-        return next();
-    }
-    // if password is changed hash this
-    this.password=await bcrypt.hash(this.password,10);
-    next;
+userSchema.pre("save",async function(){
+    
+
+     // if password wasnot changed
+     if(!this.isModified("password")){
+         return ;
+     }
+     // if password is changed hash this
+     this.password=await bcrypt.hash(this.password,10);
+   
 })
 
 // creating a method for userchema  for checking password correction
 userSchema.methods.isPasswordCorrect=async function(password){
     return await bcrypt.compare(password,this.password)
 }
-
+userSchema.methods.isAccountTypeCorrect= function(accountType){
+  return accountType===this.accountType;
+}
 //creating a method to generate access and refresh token
 
 //access token
@@ -67,7 +75,7 @@ return jwt.sign(
 )
 }
 
-//refresh token
+// //refresh token
 userSchema.methods.generateRefreshToken= function(){
 return jwt.sign(
     {
@@ -82,5 +90,10 @@ return jwt.sign(
 
 )
 }
-const User=mongoose.model("User",userSchema)
+
+
+// Inside src/models/user.model.js
+
+
+ const User=mongoose.model("User",userSchema)
 export default User;

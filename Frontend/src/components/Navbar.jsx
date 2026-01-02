@@ -14,31 +14,33 @@ const Navbar=({isLoggedIn,setIsLoggedIn})=>{
     }
      console.log("isLoggedIn:" ,isLoggedIn)
     return(
-        <div className="flex justify-evenly items-center w-full py-3 gap-x-20 bg-slate-500">
+        <div className="flex justify-evenly items-center w-full  gap-x-20 bg-slate-500">
             
             <nav>
                 <ul className="flex items-center gap-10">
-                    <Link to="/"><li className="bg-gray-600 hover:border-2 hover:border-cyan-50  border mt-1 border-transparent rounded-md px-3 py-2">Home</li></Link>
+                    <Link to="/"><li className="bg-gray-600 
+                hover:border-2 hover:border-cyan-50  border-transparent
+                 border mt-1 rounded-md px-3 py-2 ">Home</li></Link>
                 </ul>
             </nav>
-            <div className="flex my-auto gap-10">
+            <div className="flex my-auto gap-10 mt-2">
                 {
                     !isLoggedIn &&
                     <Link to="/signup">
-                        <button className="bg-gray-600 hover:border-2
-                         hover:border-cyan-50 border mt-1  
-                         border-transparent rounded-md px-3 py-2">Sign Up</button></Link>
+                        <button className="bg-gray-600 
+                hover:border-2 hover:border-cyan-50  border-transparent
+                 border  rounded-md px-3 py-2 mb-2">Sign Up</button></Link>
                 }
                {
                 !isLoggedIn &&
                 <Link to="/login"><button className="bg-gray-600 
                 hover:border-2 hover:border-cyan-50  border-transparent
-                 border mt-1 rounded-md px-3 py-2">Log In</button></Link>
+                 border  rounded-md px-3 py-2 mb-2">Log In</button></Link>
                }
                {
                 isLoggedIn &&
                 <Link to="/"><button  className="bg-gray-600 
-                hover:border-2 hover:border-cyan-50  border-transparent
+                hover:border-2 hover:border-cyan-50   border-transparent
                  border mt-1 rounded-md px-3 py-2" onClick={changeHandler}>Log Out</button></Link>
                }
                {

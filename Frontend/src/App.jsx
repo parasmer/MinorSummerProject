@@ -2,6 +2,7 @@ import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
+import myImage from './assets/hero-bg.jpg'
 import axios from 'axios'
 import {Routes,Route} from "react-router-dom"
 // components and pages
@@ -64,13 +65,14 @@ checkToken();
   },[]);
   if (loading) {
     return (
-      <div className="flex justify-center items-center h-screen bg-richblack-900">
+      <div className="flex justify-center items-center min-h-screen bg-richblack-900">
         <div className="text-white text-3xl">Loading...</div>
       </div>
     );
   }
   return (
-    <div className="background h-screen w-screen">
+    <div style={{ backgroundImage: `url(${myImage})` }}
+     className="bg-cover bg-center h-screen w-full">
       
      <Navbar isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
   <Routes>

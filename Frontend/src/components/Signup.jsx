@@ -17,7 +17,7 @@ const Signup= () => {
       fullName, 
       email,
       password, 
-      confirmPassword,// <--- ADDED: Many backends expect 'username', not 'fullName'
+      confirmPassword,
       accountType,
     };
 
@@ -29,23 +29,22 @@ const Signup= () => {
         headers: {
             'Content-Type': 'application/json'
         },
-        // FIX: Use JSON.stringify() to convert your object to a string
         body: JSON.stringify(formData), 
     });
 console.log("data sent successfully")
-// console.log("response",response);
-        // 2. We MUST parse the JSON to see what the backend said
+
         const data = await response.json(); 
         
-        console.log("Server Status Code:", response.status); // 3. Check status (200, 400, 500?)
-        console.log("Server Response Body:", data); // 4. Read the exact error message
+        console.log("Server Status Code:", response.status); 
+        console.log("Server Response Body:", data);
 
         if (response) {
             alert("Signup Successful!");
+            //redirecting to home on successful signup
          navigate('/');
-            // Redirect or clear form here
+           
         } else {
-            // This will show you exactly why it failed
+            
             alert(`Signup Failed: ${data.message || JSON.stringify(data)}`);
         }
     } 
@@ -61,7 +60,7 @@ console.log("data sent successfully")
         <form onSubmit={handleSubmit}>
           <h2>Register</h2>
           
-          {/* --- TOGGLE BUTTON SECTION --- */}
+       
           <div className="toggle-container">
             <div 
               className={`toggle-btn ${accountType === 'User' ? 'active' : ''}`}
@@ -117,7 +116,7 @@ console.log("data sent successfully")
           </div>
          
 
-          <button type="submit">Sign Up</button>
+          <button className="signUpbutton" type="submit">Sign Up</button>
 
         </form>
       </div>

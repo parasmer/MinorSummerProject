@@ -1,7 +1,8 @@
+import dotenv from "dotenv"
 import express from "express"
 import cors from "cors"
 import cookieParser from "cookie-parser"
-import dotenv from "dotenv"
+
 dotenv.config({
     path:'./.env'
 });
@@ -9,8 +10,7 @@ const app = express()
 
 // 1. CORS must be the FIRST middleware to handle pre-flight requests
 app.use(cors({
-   origin:process.env.CORS_ORIGIN, // Allow only your frontend
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+   origin:process.env.CORS_ORIGIN, 
   credentials: true
 }))
 

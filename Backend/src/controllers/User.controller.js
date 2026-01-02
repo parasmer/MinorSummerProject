@@ -5,15 +5,21 @@ import asyncHandler from "../utils/asyncHandler.js";
 import jwt from "jsonwebtoken"
 
 const generateAccessandRefreshToken=async(userId)=>{
+   
     try{
 const user=await User.findById(userId)
+
+
 const accessToken=user.generateAccessToken()
 const refreshToken=user.generateRefreshToken()
-//it will save the refreshtoken in user object
+
 user.refreshToken=refreshToken
 //it is used to reduce latency that occurrs in validation check
 // just saves the data without any other validation check
+
 await user.save({validateBeforeSave:false})
+
+
 return {accessToken,refreshToken}
     }
     catch(error){
@@ -36,7 +42,7 @@ const getCurrentUser = asyncHandler(async(req, res) => {
         );
     });
 const signUpUser=asyncHandler(async(req,res)=>{
-    console.log("I AM HERE! Request received:", req.body); // <--- ADD THIS LINE
+   
     const {fullName,email,password,confirmPassword,accountType}=req.body
     // if any field is empty 
     if([fullName,email,password,confirmPassword,accountType].some((field)=>
@@ -125,4 +131,47 @@ catch(err){
 throw new apiError(401,err?.message||"invalid refresh token")
 }
 })
-export{signUpUser,generateAccessandRefreshToken,refreshAccessToken,getCurrentUser}
+const loginUser=asyncHandler(async(req,res)=>{
+    const {password,accountType,email}=req.body;
+    // credentials empty check
+    if(!email){
+        throw new apiError(400,"Username or email is required")
+    }
+    // checking user is in database
+    const user=await User.findOne({
+    email:email,
+    })
+    if(!user){
+        throw new apiError(404,"account doesn't exists with this credentials");
+    }
+   const isPasswordValid=await user.isPasswordCorrect(password);
+   if(!isPasswordValid){
+throw new apiError(401,"invalid user credentials")
+   }
+   const isAccountTypeValid=await user.isAccountTypeCorrect(accountType);
+   if(!isAccountTypeValid){
+throw new apiError(401,"incorrect userType");
+   }
+    const {accessToken,refreshToken}=await generateAccessandRefreshToken(user._id)
+    const loggedInUser=await User.findById(user._id).select("-password -refreshToken")
+     const options={
+        httpOnly:true,
+        secure:true,
+    }
+    return res
+    .status(200)
+    .cookie("accessToken",accessToken,options)
+    .cookie("refreshToken",refreshToken,options)
+    .json(
+        new apiResponse(
+            200,
+            {
+           user:loggedInUser,
+           accessToken,refreshToken
+            },
+            "user logged in successfully"
+        )
+    )
+
+})
+export{signUpUser,generateAccessandRefreshToken,refreshAccessToken,getCurrentUser,loginUser}

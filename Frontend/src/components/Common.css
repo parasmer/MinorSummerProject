@@ -2,8 +2,6 @@
 
 /* Reset defaults */
 * {
-  margin: 0;
-  padding: 0;
   box-sizing: border-box;
   font-family: "Open Sans", sans-serif;
 }
@@ -107,7 +105,7 @@ h2 {
   text-decoration: underline;
 }
 
-button {
+.signup-button,.login-button {
   background: #fff;
   color: #000;
   font-weight: 600;
