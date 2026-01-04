@@ -30,7 +30,7 @@ if(response.ok){
   console.log("logged in successfully");
   setIsLoggedIn(true);
 
- navigate('/dashboard')
+ navigate('/dashboard',{state:accountType})
 }
 else{
   alert(`login failed : ${data.json}`)
