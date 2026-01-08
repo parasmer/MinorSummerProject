@@ -117,7 +117,7 @@ h2 {
   transition: 0.3s ease;
 }
 
-.login-button:hover {
+.login-button,.submit-btn:hover {
     color: white !important;
     border-color: #fff !important;
     background: rgba(255, 255, 255, 0.15) !important;

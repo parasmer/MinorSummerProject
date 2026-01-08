@@ -5,7 +5,7 @@ const  EngineerMapPage=({setisLoggedIn})=>{
     const coords=location.state;
 return(
     <div>
-        
+               <h1>Welcome to EngineerMap</h1> 
     </div>
 )
 }
