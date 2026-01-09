@@ -2,8 +2,8 @@ import React from "react";
 
 const HomePage=({setisLoggedIn})=>{
 return(
-    <div>
-     
+    <div className="flex">
+    <h1 className="mx-auto  text-white font-extrabold"> Welcome to RouteShield</h1>
     </div>
 )
 }

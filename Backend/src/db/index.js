@@ -1,22 +1,31 @@
 import mongoose from "mongoose";
-import { dbName } from "../constants.js";
+import dotenv from "dotenv";
+dotenv.config();
 
-const dbConnect = async () => {
-    try {
-        // Safety check to ensure URI exists before attempting connection
-        if (!process.env.MONGODB_USER_URI) {
-            throw new Error("MONGODB_USER_URI is missing in environment variables");
-        }
 
-        const connectionInstance = await mongoose.connect(`${process.env.MONGODB_USER_URI}/${dbName}`);
-        
-        // Corrected the log to show HOST, not PORT
-        console.log(`\n MongoDB connected !! DB HOST: ${connectionInstance.connection.host}`);
-    } 
-    catch (err) {
-        console.log("MONGODB connection FAILED ", err);
-        process.exit(1);
-    }
-}
+export const authDB = mongoose.createConnection(
+  process.env.MONGODB_USER_URI
+);
 
-export default dbConnect;
+authDB.on("connected", () => {
+  console.log("Connected to AUTH database");
+});
+
+authDB.on("error", (err) => {
+  console.error(" AUTH DB error:", err);
+});
+
+export const accidentDB = mongoose.createConnection(
+  process.env.MONGODB_ACCIDENT_URI
+);
+
+accidentDB.on("connected", () => {
+  console.log("Connected to ACCIDENT database");
+});
+console.log("ENV CHECK →", {
+  USER: process.env.MONGODB_USER_URI,
+  ACCIDENT: process.env.MONGODB_ACCIDENT_URI,
+});
+accidentDB.on("error", (err) => {
+  console.error("ACCIDENT DB error:", err);
+});

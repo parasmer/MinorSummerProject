@@ -25,6 +25,7 @@ app.use(cookieParser());
 
 // 5. Routes
 import userRouter from "./routes/user.routes.js";
+import accidentRouter from "./routes/accident.routes.js";
 app.use("/api/v1/users", userRouter);
-
+app.use("/api/v1/accidents",accidentRouter);
 export default app;

@@ -1,4 +1,6 @@
 import mongoose,{Schema} from "mongoose"
+import  {authDB}  from "../db/index.js";
+
 import bcrypt from "bcrypt"
 import jwt from "jsonwebtoken"
 const userSchema=new Schema(
@@ -95,5 +97,5 @@ return jwt.sign(
 // Inside src/models/user.model.js
 
 
- const User=mongoose.model("User",userSchema)
+ const User=authDB.model("User",userSchema,"users")
 export default User;

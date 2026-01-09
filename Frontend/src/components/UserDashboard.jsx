@@ -1,7 +1,8 @@
-import startLogo from "../assets/startLogo.png"
+
 import React, { useState } from "react";
 import {useNavigate} from "react-router-dom";
 import "./Common.css"
+import startLogo from "../assets/startLogo.png"
  async function getCoordinates(address){
 const url=`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(address)}`
 try{

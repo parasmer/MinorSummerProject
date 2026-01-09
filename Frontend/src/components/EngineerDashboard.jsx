@@ -2,15 +2,16 @@
 import React, { useState } from "react";
 import {useNavigate} from "react-router-dom";
 import "./Common.css";
+import { useEffect } from "react";
 import start from "../assets/startLogo.png"
 //here we do current location stuff
 const EngineerDashboard = () => {
 const navigate=useNavigate();
-    const [currentCoords, setCurrentCoords] = useState(null);
+  
 
 
     const handleGetLocation = () => {
-    
+ 
         if (!navigator.geolocation) {
             alert("Geolocation is not supported by browser");
             return;
@@ -19,17 +20,21 @@ const navigate=useNavigate();
         navigator.geolocation.getCurrentPosition(
             (position) => {
                
-                setCurrentCoords({
-                    latitude: position.coords.latitude,
-                    longitude: position.coords.longitude,
-                });
-                console.log("Location fetched:", position.coords);
+               
+                   const lat=position.coords.latitude;
+                    const lon=position.coords.longitude;
+                
+                console.log("Location fetched:");
+                          console.log(`coords latitude:${lat} ,coords longitude:${lon}`);
+        navigate('/engineerMap',{state:{coords:[lat,lon]}})
             },
-            () => {
+            (error) => {
+                console.log("error",error);
                 alert("Permission denied or unavailable location");
             }
         );
-        navigate('/engineerMap',{state:currentCoords})
+
+
     };
 
     return (
