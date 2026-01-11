@@ -85,7 +85,7 @@ const MapComponent=({startCoords,endCoords})=>{
          useEffect(()=>{
             const fetchAccidentSpots=async()=>{
                 try{
-                const response=await fetch("http://localhost:8000/api/v1/accidents/getaccidentData");
+                const response=await fetch(`${import.meta.env.VITE_API_URL}/api/v1/accidents/getaccidentData`);
                 // console.log("status:", response.status);
                 const text = await response.text();
 // console.log("raw response:", text);
@@ -112,7 +112,7 @@ const fetchRoute=async()=>{
     try{
         const start = `${startposition[1]},${startposition[0]}`; 
 const end = `${endposition[1]},${endposition[0]}`;
-const response=await fetch(`http://localhost:8000/api/v1/routepath/getroutePath?start=${start}&end=${end}`);
+const response=await fetch(`${import.meta.env.VITE_API_URL}/v1/routepath/getroutePath?start=${start}&end=${end}`);
 const result=await response.json();
 const data = result.routes ? result: result.data;
 //  console.log("response format checking", result);

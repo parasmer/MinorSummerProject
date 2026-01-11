@@ -44,7 +44,7 @@ const MapComponent = ({coords}) => {
          useEffect(()=>{
             const fetchAccidentSpots=async()=>{
                 try{
-                const response=await fetch("http://localhost:8000/api/v1/accidents/getaccidentData");
+                const response=await fetch(`${import.meta.env.VITE_API_URL}/api/v1/accidents/getaccidentData`);
                 // console.log("status:", response.status);
                 const text = await response.text();
 // console.log("raw response:", text);
