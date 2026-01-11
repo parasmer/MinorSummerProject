@@ -10,11 +10,9 @@ const app = express()
 
 
 app.use(cors({
-    origin: [
-       "https://minorsummerproject.vercel.app"                     
-    ],
-    credentials: true
-}))
+    origin: 'https://minor-summer-project.vercel.app', // Your actual Vercel frontend domain
+    credentials: true 
+}));
 
 
 app.use(express.json({ limit: "16kb" }));
