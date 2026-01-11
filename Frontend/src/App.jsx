@@ -36,7 +36,7 @@ const checkToken=async()=>{
   // else token is present
   try{
     //making call to backend
-    const response=await axios.get("http://localhost:8000/api/v1/users/current-user",{headers:
+    const response=await axios.get("${import.meta.env.VITE_API_URL}/api/v1/users/current-user",{headers:
       {
         'Authorization':`Bearer ${token}`,
       }
