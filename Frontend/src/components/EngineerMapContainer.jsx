@@ -5,7 +5,7 @@ import markerShadow from "leaflet/dist/images/marker-shadow.png";
 import { useState,useEffect } from 'react';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
-
+import Legend from './LegendUserMap.js';
 // --- Fix for default marker icon missing in React ---
 // This part is often necessary because webpack/vite can mess up image paths
 delete L.Icon.Default.prototype._getIconUrl;
@@ -134,6 +134,7 @@ useEffect(() => {
             </Popup>
           </Marker>);
 })}
+<Legend/>
         </MapContainer>
     );
 };

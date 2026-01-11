@@ -28,10 +28,57 @@
   }
 }
 
+.custom-div-icon {
+  background-color: #ccc; /* A default gray color */
+  border-radius: 50%;     /* This makes the square a circle */
+  width: 15px;
+  height: 15px;
+  border: 2px solid white; /* Adds a nice white border */
+  box-shadow: 0 0 5px rgba(0,0,0,0.5); /* Adds a subtle drop shadow */
+}
+
+/* Specific background colors for each risk level */
+.marker-color-red {
+  background-color: #d32f2f; /* Red for high risk */
+}
+
+.marker-color-yellow {
+  background-color: #fbc02d; /* Yellow for moderate risk */
+}
+
+.marker-color-green {
+  background-color: #388e3c; /* Green for minor risk */
+}
 .card {
   padding: 2em;
 }
+.legend {
+  padding: 6px 8px;
+  font: 14px Arial, Helvetica, sans-serif;
+  background: white;
+  background: rgba(255, 255, 255, 0.8);
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+  line-height: 18px;
+  color: #555;
+}
 
+.legend h4 {
+  margin: 0 0 5px;
+  color: #333;
+  text-align: center;
+ 
+}
+
+.legend i {
+  width: 18px;
+  height: 18px;
+  float: left;
+  margin-right: 6px;
+
+  opacity: 0.9;
+    border-radius: 50%;
+}
 .read-the-docs {
   color: #888;
 }
