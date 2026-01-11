@@ -45,11 +45,11 @@ const MapComponent = ({coords}) => {
             const fetchAccidentSpots=async()=>{
                 try{
                 const response=await fetch("http://localhost:8000/api/v1/accidents/getaccidentData");
-                console.log("status:", response.status);
+                // console.log("status:", response.status);
                 const text = await response.text();
-console.log("raw response:", text);
+// console.log("raw response:", text);
 const result = JSON.parse(text);
-console.log("parsed result:", result);
+// console.log("parsed result:", result);
                 // const result=await response.json();
                 // console.log("data loaded",result);
                 setAccidentSpots(result.data);
@@ -62,7 +62,7 @@ console.log("parsed result:", result);
          },[]);
     const [address,setAddress]=useState("Loading address");
     
-    console.log(`coords latitude:${coords[0]} ,coords longitude:${coords[1]}`);
+    // console.log(`coords latitude:${coords[0]} ,coords longitude:${coords[1]}`);
     const position =[coords[0],coords[1]];
 
     // function to get current location from coordinates{lat,lon}
