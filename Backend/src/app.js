@@ -10,7 +10,7 @@ const app = express()
 
 
 app.use(cors({
-    origin: 'https://minor-summer-project.vercel.app', // Your actual Vercel frontend domain
+    origin:process.env.CORS_ORIGIN, // Your actual Vercel frontend domain
     credentials: true 
 }));
 
