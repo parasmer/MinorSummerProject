@@ -28,6 +28,6 @@ import userRouter from "./routes/user.routes.js";
 import accidentRouter from "./routes/accident.routes.js";
 import routepathRouter from "./routes/routepath.routes.js";
 app.use("/api/v1/users", userRouter);
-app.use("/api/v1/routepath", routepathRouter);
+app.use("/api/v1/routePath", routepathRouter);
 app.use("/api/v1/accidents",accidentRouter);
 export default app;
