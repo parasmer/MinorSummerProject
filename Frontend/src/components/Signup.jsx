@@ -49,8 +49,14 @@ console.log("data sent successfully")
         }
     } 
     catch (err) {
-        console.log("Network/Code Error:", err);
+      if (err.response) {
+            // This pulls the "User already exisisted" message
+            alert(err.response.data.message); 
+        }
+        else{
+ console.log("Network/Code Error:", err);
         alert("Connection Error. Check Backend Console.");
+        }
     }
 };
 
