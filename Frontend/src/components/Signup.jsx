@@ -38,25 +38,22 @@ console.log("data sent successfully")
         console.log("Server Status Code:", response.status); 
         console.log("Server Response Body:", data);
 
-        if (response.ok) {
+     if (response.ok) {
+            // This runs for 200-299 status codes
             alert("Signup Successful!");
-            //redirecting to home on successful signup
-         navigate('/');
-           
+            navigate('/');
         } else {
-            
-            alert(`Signup Failed: ${data.message || JSON.stringify(data)}`);
+            // This runs for 400, 409, 500 etc.
+            // It will now correctly show "User already exisisted"
+            alert(`Error: ${data.message || "Signup failed"}`);
         }
     } 
     catch (err) {
-      if (err.response) {
-            // This pulls the "User already exisisted" message
-            alert(err.response.data.message); 
-        }
-        else{
+     
+   
  console.log("Network/Code Error:", err);
         alert("Connection Error. Check Backend Console.");
-        }
+        
     }
 };
 
