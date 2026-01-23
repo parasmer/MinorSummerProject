@@ -38,7 +38,7 @@ console.log("data sent successfully")
         console.log("Server Status Code:", response.status); 
         console.log("Server Response Body:", data);
 
-        if (response) {
+        if (response.ok) {
             alert("Signup Successful!");
             //redirecting to home on successful signup
          navigate('/');
