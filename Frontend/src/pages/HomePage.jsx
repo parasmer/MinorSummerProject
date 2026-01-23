@@ -2,7 +2,7 @@ import React from "react";
 
 const HomePage=({setisLoggedIn})=>{
 return(
-    <div className="flex min-h-[calc(100vh-58px)] w-full  items-center justify-center">
+    <div className="flex flex-1 w-full  items-center justify-center">
     <h1 className="text-white font-extrabold"> Welcome to RouteShield</h1>
     </div>
 )
